@@ -1,0 +1,12 @@
+{
+    "name": "ImGUI.NET",
+    "references": [ "System.Runtime.CompilerServices.Unsafe" ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
