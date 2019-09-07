@@ -2,10 +2,12 @@
 
 #include "PlatformBase.h"
 #include "RenderAPI.h"
+#include "ImGuiDrawData.h"
 
 #include <assert.h>
 #include <math.h>
 #include <vector>
+#include <string>
 
 
 // --------------------------------------------------------------------------
@@ -303,5 +305,36 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID)
 extern "C" UnityRenderingEvent UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API GetRenderEventFunc()
 {
 	return OnRenderEvent;
+}
+
+
+//
+typedef void(__stdcall* DebugCallback) (const char* str);
+DebugCallback gDebugCallback;
+
+extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API RegisterDebugCallback(DebugCallback callback)
+{
+    if (callback)
+    {
+        gDebugCallback = callback;
+    }
+}
+
+void DebugInUnity(std::string message)
+{
+    if (gDebugCallback)
+    {
+        gDebugCallback(message.c_str());
+    }
+}
+
+extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API PrintTest()
+{
+    DebugInUnity("Test From the DLL!");
+}
+
+extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API ReadImGuiDrawData(ImDrawData* inData)
+{
+    DebugInUnity(std::to_string(inData->DisplaySize.x));
 }
 
