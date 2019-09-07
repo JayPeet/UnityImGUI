@@ -51,13 +51,13 @@ private:
 
 private:
 	UnityGfxRenderer m_APIType;
-	GLuint m_VertexShader;
-	GLuint m_FragmentShader;
-	GLuint m_Program;
-	GLuint m_VertexArray;
-	GLuint m_VertexBuffer;
-	int m_UniformWorldMatrix;
-	int m_UniformProjMatrix;
+	GLuint m_VertexShader{ 0 };
+	GLuint m_FragmentShader{ 0 };
+	GLuint m_Program{ 0 };
+	GLuint m_VertexArray{0};
+	GLuint m_VertexBuffer{ 0 };
+	int m_UniformWorldMatrix{ 0 };
+	int m_UniformProjMatrix{ 0 };
 };
 
 
@@ -234,7 +234,7 @@ void RenderAPI_OpenGLCoreES::DrawSimpleTriangles(const float worldMatrix[16], in
 #	endif // if SUPPORT_OPENGL_CORE
 
 	// Bind a vertex buffer, and update data in it
-	const int kVertexSize = 12 + 4;
+	const size_t kVertexSize = 12 + 4;
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, kVertexSize * triangleCount * 3, verticesFloat3Byte4);
@@ -260,10 +260,10 @@ void RenderAPI_OpenGLCoreES::DrawSimpleTriangles(const float worldMatrix[16], in
 
 void* RenderAPI_OpenGLCoreES::BeginModifyTexture(void* textureHandle, int textureWidth, int textureHeight, int* outRowPitch)
 {
-	const int rowPitch = textureWidth * 4;
+	const size_t rowPitch = (size_t)textureWidth * 4;
 	// Just allocate a system memory buffer here for simplicity
 	unsigned char* data = new unsigned char[rowPitch * textureHeight];
-	*outRowPitch = rowPitch;
+	*outRowPitch = (int)rowPitch;
 	return data;
 }
 

@@ -245,10 +245,10 @@ void RenderAPI_D3D11::DrawSimpleTriangles(const float worldMatrix[16], int trian
 
 void* RenderAPI_D3D11::BeginModifyTexture(void* textureHandle, int textureWidth, int textureHeight, int* outRowPitch)
 {
-	const int rowPitch = textureWidth * 4;
+	const size_t rowPitch = (size_t)textureWidth * 4;
 	// Just allocate a system memory buffer here for simplicity
 	unsigned char* data = new unsigned char[rowPitch * textureHeight];
-	*outRowPitch = rowPitch;
+	*outRowPitch = (int)rowPitch;
 	return data;
 }
 
