@@ -12,9 +12,6 @@ public class ImGuiPluginHook : MonoBehaviour
     private static extern void RegisterDebugCallback(DebugCallback callback);
 
     [DllImport("UnityImGuiRenderer")]
-    private static extern void PrintTest();
-
-    [DllImport("UnityImGuiRenderer")]
     public static extern void ReadImGuiDrawData(ImGuiNET.ImDrawDataPtr ptr);
 
     private ImGuiController _controller;
@@ -32,14 +29,7 @@ public class ImGuiPluginHook : MonoBehaviour
     private void Update()
     {
         _controller.Update();
-
-
         SubmitUI();
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            PrintTest();
-        }
-
         _controller.Render();
     }
 

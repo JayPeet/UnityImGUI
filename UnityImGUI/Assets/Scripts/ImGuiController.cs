@@ -5,6 +5,7 @@ using UnityEngine;
 public class ImGuiController
 {
     private bool _frameBegun;
+    private IntPtr _fontAtlasID;
 
     public ImGuiController()
     {
@@ -30,6 +31,8 @@ public class ImGuiController
         IntPtr pixels;
         int width, height, bytesPerPixel;
         io.Fonts.GetTexDataAsRGBA32(out pixels, out width, out height, out bytesPerPixel);
+
+        //#TODO : Figure out when and how to do this texture creation in the c++ plugin.
         // Store our identifier
         //io.Fonts.SetTexID(_fontAtlasID);
 
@@ -111,10 +114,33 @@ public class ImGuiController
         }
 
         SetPerFrameImGuiData(Time.deltaTime, Screen.width, Screen.height, new System.Numerics.Vector2(1.0f, 1.0f));
-        //UpdateImGuiInput(snapshot);
+        UpdateImGuiInput();
 
         _frameBegun = true;
         ImGui.NewFrame();
       
+    }
+
+    private void UpdateImGuiInput()
+    {
+        ImGuiIOPtr io = ImGui.GetIO();
+        System.Numerics.Vector2 mousePosition = new System.Numerics.Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        bool leftPressed = Input.GetMouseButtonDown(0);
+        bool middlePressed = Input.GetMouseButtonDown(1);
+        bool rightPressed = Input.GetMouseButtonDown(2);
+
+        io.MouseDown[0] = leftPressed || Input.GetMouseButtonDown(0);
+        io.MouseDown[1] = rightPressed || Input.GetMouseButtonDown(1);
+        io.MouseDown[2] = middlePressed || Input.GetMouseButtonDown(2);
+        io.MousePos = mousePosition;
+        io.MouseWheel = Input.mouseScrollDelta.y;
+
+        //#TODO : Implement each Key!
+
+        io.KeyCtrl = Input.GetKey(KeyCode.LeftControl);
+        io.KeyAlt = Input.GetKey(KeyCode.LeftAlt);
+        io.KeyShift = Input.GetKey(KeyCode.LeftShift);
+        io.KeySuper = Input.GetKey(KeyCode.LeftWindows);
     }
 }

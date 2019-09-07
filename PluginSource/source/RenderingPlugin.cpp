@@ -293,9 +293,7 @@ static void UNITY_INTERFACE_API OnRenderEvent(int eventID)
 	if (s_CurrentAPI == NULL)
 		return;
 
-	DrawColoredTriangle();
-	ModifyTexturePixels();
-	ModifyVertexBuffer();
+    //#TODO : Do the actual IMGUI render here.
 }
 
 
@@ -328,11 +326,7 @@ void DebugInUnity(std::string message)
     }
 }
 
-extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API PrintTest()
-{
-    DebugInUnity("Test From the DLL!");
-}
-
+//#TODO : Acquire the in data here. Actuall drawing has to happen in OnRenderEvent.
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API ReadImGuiDrawData(ImDrawData* inData)
 {
     DebugInUnity(std::to_string(inData->DisplaySize.x));
