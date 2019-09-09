@@ -9,6 +9,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ImGuiDrawData.h" />
+    <ClInclude Include="ImGuiShader.h" />
     <ClInclude Include="PlatformBase.h" />
     <ClInclude Include="RenderAPI.h" />
     <ClInclude Include="Unity\IUnityGraphics.h">
@@ -38,8 +40,6 @@
     <ClInclude Include="gl3w\glcorearb.h">
       <Filter>gl3w</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiDrawData.h" />
-    <ClInclude Include="ImGuiShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderAPI.cpp" />

@@ -159,7 +159,6 @@ struct ImDrawData
 };
 
 typedef void (*ImDrawCallback)(const ImDrawList* parent_list, const ImDrawCmd* cmd);
-
 // Typically, 1 command = 1 GPU draw call (unless command is a callback)
 struct ImDrawCmd
 {

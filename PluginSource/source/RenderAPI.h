@@ -25,6 +25,7 @@ public:
 	// Reversed Z is used on modern platforms, and improves depth buffer precision.
 	virtual bool GetUsesReverseZ() = 0;
 
+	virtual ImTextureID CreateImGuiFontsTexture(void* pixels, int width, int height, int bytesPerPixel) = 0;
     virtual void ProcessImGuiCommandList(ImDrawData* drawData) = 0;
 };
 

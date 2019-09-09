@@ -22,7 +22,8 @@ public:
 
 	virtual bool GetUsesReverseZ() { return (int)m_Device->GetFeatureLevel() >= (int)D3D_FEATURE_LEVEL_10_0; }
 
-    virtual void ProcessImGuiCommandList(ImDrawData* drawData);
+	ImTextureID CreateImGuiFontsTexture(void* pixels, int width, int height, int bytesPerPixel) override;
+    void ProcessImGuiCommandList(ImDrawData* drawData) override;
 private:
 	void CreateResources();
 	void ReleaseResources();
@@ -142,7 +143,7 @@ struct VERTEX_CONSTANT_BUFFER
     float        mvp[4][4];
 };
 
-static ID3D11Device* g_pd3dDevice = NULL;
+//static ID3D11Device* g_pd3dDevice = NULL;
 static ID3D11DeviceContext* g_pd3dDeviceContext = NULL;
 static ID3D11Buffer* g_pVB = NULL;
 static ID3D11Buffer* g_pIB = NULL;
@@ -316,6 +317,59 @@ void RenderAPI_D3D11::ReleaseResources()
     SAFE_RELEASE(g_pInputLayout);
 }
 
+
+ImTextureID RenderAPI_D3D11::CreateImGuiFontsTexture(void* pixels, int width, int height, int bytesPerPixel)
+{
+	// Upload texture to graphics system
+	{
+		D3D11_TEXTURE2D_DESC desc;
+		ZeroMemory(&desc, sizeof(desc));
+		desc.Width = width;
+		desc.Height = height;
+		desc.MipLevels = 1;
+		desc.ArraySize = 1;
+		desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		desc.SampleDesc.Count = 1;
+		desc.Usage = D3D11_USAGE_DEFAULT;
+		desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+		desc.CPUAccessFlags = 0;
+
+		ID3D11Texture2D *pTexture = NULL;
+		D3D11_SUBRESOURCE_DATA subResource;
+		subResource.pSysMem = pixels;
+		subResource.SysMemPitch = desc.Width * 4;
+		subResource.SysMemSlicePitch = 0;
+		m_Device->CreateTexture2D(&desc, &subResource, &pTexture);
+
+		// Create texture view
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+		ZeroMemory(&srvDesc, sizeof(srvDesc));
+		srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		srvDesc.Texture2D.MipLevels = desc.MipLevels;
+		srvDesc.Texture2D.MostDetailedMip = 0;
+		m_Device->CreateShaderResourceView(pTexture, &srvDesc, &g_pFontTextureView);
+		pTexture->Release();
+	}
+
+	// Create texture sampler
+	{
+		D3D11_SAMPLER_DESC desc;
+		ZeroMemory(&desc, sizeof(desc));
+		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		desc.MipLODBias = 0.f;
+		desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		desc.MinLOD = 0.f;
+		desc.MaxLOD = 0.f;
+		m_Device->CreateSamplerState(&desc, &g_pFontSampler);
+	}
+
+	return  (ImTextureID)g_pFontTextureView;
+}
+
 void RenderAPI_D3D11::ProcessImGuiCommandList(ImDrawData* drawData)
 {
     ID3D11DeviceContext* ctx = nullptr;
@@ -473,7 +527,7 @@ void RenderAPI_D3D11::ProcessImGuiCommandList(ImDrawData* drawData)
             const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[cmd_i];
             if (pcmd->UserCallback)
             {
-                pcmd->UserCallback(cmd_list, pcmd);
+				//pcmd->UserCallback(cmd_list, pcmd);
             }
             else
             {

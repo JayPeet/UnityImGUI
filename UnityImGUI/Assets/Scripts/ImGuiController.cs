@@ -15,7 +15,7 @@ public class ImGuiController
         ImGui.GetIO().Fonts.AddFontDefault();
 
         //#TODO : GenerateDeviceResources in Plugin.
-        RecreateFontDeviceTexture();
+        RecreateFontDeviceTexture(false);
         SetKeyMappings();
 
         SetPerFrameImGuiData(1.0f / 60.0f, Screen.width, Screen.height, new System.Numerics.Vector2(1.0f, 1.0f));
@@ -24,39 +24,18 @@ public class ImGuiController
         _frameBegun = true;
     }
 
-    public void RecreateFontDeviceTexture()
+    public void RecreateFontDeviceTexture(bool sendToGPU)
     {
         ImGuiIOPtr io = ImGui.GetIO();
-        // Build
         IntPtr pixels;
         int width, height, bytesPerPixel;
         io.Fonts.GetTexDataAsRGBA32(out pixels, out width, out height, out bytesPerPixel);
 
-        //#TODO : Figure out when and how to do this texture creation in the c++ plugin.
-        // Store our identifier
-        //io.Fonts.SetTexID(_fontAtlasID);
-
-        //_fontTexture = gd.ResourceFactory.CreateTexture(TextureDescription.Texture2D(
-        //    (uint)width,
-        //    (uint)height,
-        //    1,
-        //    1,
-        //    PixelFormat.R8_G8_B8_A8_UNorm,
-        //    TextureUsage.Sampled));
-        //_fontTexture.Name = "ImGui.NET Font Texture";
-        //gd.UpdateTexture(
-        //    _fontTexture,
-        //    pixels,
-        //    (uint)(bytesPerPixel * width * height),
-        //    0,
-        //    0,
-        //    0,
-        //    (uint)width,
-        //    (uint)height,
-        //    1,
-        //    0,
-        //    0);
-        //_fontTextureView = gd.ResourceFactory.CreateTextureView(_fontTexture);
+        if(sendToGPU)
+        {
+            IntPtr fontTexID = ImGuiPluginHook.GenerateImGuiFontTexture(pixels, width, height, bytesPerPixel);
+            io.Fonts.SetTexID(fontTexID);
+        }
 
         io.Fonts.ClearTexData();
     }
@@ -124,11 +103,11 @@ public class ImGuiController
     private void UpdateImGuiInput()
     {
         ImGuiIOPtr io = ImGui.GetIO();
-        System.Numerics.Vector2 mousePosition = new System.Numerics.Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        System.Numerics.Vector2 mousePosition = new System.Numerics.Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);
 
-        bool leftPressed = Input.GetMouseButtonDown(0);
-        bool middlePressed = Input.GetMouseButtonDown(1);
-        bool rightPressed = Input.GetMouseButtonDown(2);
+        bool leftPressed = Input.GetMouseButton(0);
+        bool middlePressed = Input.GetMouseButton(1);
+        bool rightPressed = Input.GetMouseButton(2);
 
         io.MouseDown[0] = leftPressed || Input.GetMouseButtonDown(0);
         io.MouseDown[1] = rightPressed || Input.GetMouseButtonDown(1);

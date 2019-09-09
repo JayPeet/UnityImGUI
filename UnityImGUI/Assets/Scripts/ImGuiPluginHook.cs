@@ -15,6 +15,9 @@ public class ImGuiPluginHook : MonoBehaviour
     private static extern void RegisterDebugCallback(DebugCallback callback);
 
     [DllImport("UnityImGuiRenderer")]
+    public static extern System.IntPtr GenerateImGuiFontTexture(System.IntPtr pixels, int width, int height, int bytesPerPixel);
+
+    [DllImport("UnityImGuiRenderer")]
     public static extern void SendImGuiDrawCommands(ImGuiNET.ImDrawDataPtr ptr);
 
     private ImGuiController _controller;
@@ -32,6 +35,10 @@ public class ImGuiPluginHook : MonoBehaviour
 
     private IEnumerator CallPluginAtEndOfFrames()
     {
+
+        yield return new WaitForEndOfFrame();
+        _controller.RecreateFontDeviceTexture(true);
+
         while (true)
         {
             //At the end of the frame, have ImGui render before invoking the draw on the GPU.
@@ -54,6 +61,7 @@ public class ImGuiPluginHook : MonoBehaviour
 
     private static void SubmitUI()
     {
-        ImGui.Text("C# -> C++!");
+        ImGui.SetNextWindowPos(new System.Numerics.Vector2(650, 20), ImGuiCond.FirstUseEver);
+        ImGui.ShowDemoWindow();
     }
 }

@@ -38,6 +38,7 @@ public:
 
 	virtual bool GetUsesReverseZ() { return false; }
 
+	ImTextureID CreateImGuiFontsTexture(void* pixels, int width, int height, int bytesPerPixel) override;
     virtual void ProcessImGuiCommandList(ImDrawData* drawData);
 
 private:
@@ -194,6 +195,12 @@ void RenderAPI_OpenGLCoreES::ProcessDeviceEvent(UnityGfxDeviceEventType type, IU
 		//@TODO: release resources
 	}
 }
+
+
+ImTextureID RenderAPI_OpenGLCoreES::CreateImGuiFontsTexture(void* pixels, int width, int height, int bytesPerPixel)
+{
+	return nullptr;
+}  
 
 void RenderAPI_OpenGLCoreES::ProcessImGuiCommandList(ImDrawData* drawData)
 {
