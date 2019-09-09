@@ -39,6 +39,7 @@
       <Filter>gl3w</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiDrawData.h" />
+    <ClInclude Include="ImGuiShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderAPI.cpp" />

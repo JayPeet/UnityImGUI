@@ -38,13 +38,7 @@ public:
 
 	virtual bool GetUsesReverseZ() { return false; }
 
-	virtual void DrawSimpleTriangles(const float worldMatrix[16], int triangleCount, const void* verticesFloat3Byte4);
-
-	virtual void* BeginModifyTexture(void* textureHandle, int textureWidth, int textureHeight, int* outRowPitch);
-	virtual void EndModifyTexture(void* textureHandle, int textureWidth, int textureHeight, int rowPitch, void* dataPtr);
-
-	virtual void* BeginModifyVertexBuffer(void* bufferHandle, size_t* outBufferSize);
-	virtual void EndModifyVertexBuffer(void* bufferHandle);
+    virtual void ProcessImGuiCommandList(ImDrawData* drawData);
 
 private:
 	void CreateResources();
@@ -201,103 +195,7 @@ void RenderAPI_OpenGLCoreES::ProcessDeviceEvent(UnityGfxDeviceEventType type, IU
 	}
 }
 
-
-void RenderAPI_OpenGLCoreES::DrawSimpleTriangles(const float worldMatrix[16], int triangleCount, const void* verticesFloat3Byte4)
+void RenderAPI_OpenGLCoreES::ProcessImGuiCommandList(ImDrawData* drawData)
 {
-	// Set basic render state
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_BLEND);
-	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_DEPTH_TEST);
-	glDepthMask(GL_FALSE);
-
-	// Tweak the projection matrix a bit to make it match what identity projection would do in D3D case.
-	float projectionMatrix[16] = {
-		1,0,0,0,
-		0,1,0,0,
-		0,0,2,0,
-		0,0,-1,1,
-	};
-
-	// Setup shader program to use, and the matrices
-	glUseProgram(m_Program);
-	glUniformMatrix4fv(m_UniformWorldMatrix, 1, GL_FALSE, worldMatrix);
-	glUniformMatrix4fv(m_UniformProjMatrix, 1, GL_FALSE, projectionMatrix);
-
-	// Core profile needs VAOs, setup one
-#	if SUPPORT_OPENGL_CORE
-	if (m_APIType == kUnityGfxRendererOpenGLCore)
-	{
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
-	}
-#	endif // if SUPPORT_OPENGL_CORE
-
-	// Bind a vertex buffer, and update data in it
-	const size_t kVertexSize = 12 + 4;
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, kVertexSize * triangleCount * 3, verticesFloat3Byte4);
-
-	// Setup vertex layout
-	glEnableVertexAttribArray(kVertexInputPosition);
-	glVertexAttribPointer(kVertexInputPosition, 3, GL_FLOAT, GL_FALSE, kVertexSize, (char*)NULL + 0);
-	glEnableVertexAttribArray(kVertexInputColor);
-	glVertexAttribPointer(kVertexInputColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kVertexSize, (char*)NULL + 12);
-
-	// Draw
-	glDrawArrays(GL_TRIANGLES, 0, triangleCount * 3);
-
-	// Cleanup VAO
-#	if SUPPORT_OPENGL_CORE
-	if (m_APIType == kUnityGfxRendererOpenGLCore)
-	{
-		glDeleteVertexArrays(1, &m_VertexArray);
-	}
-#	endif
 }
-
-
-void* RenderAPI_OpenGLCoreES::BeginModifyTexture(void* textureHandle, int textureWidth, int textureHeight, int* outRowPitch)
-{
-	const size_t rowPitch = (size_t)textureWidth * 4;
-	// Just allocate a system memory buffer here for simplicity
-	unsigned char* data = new unsigned char[rowPitch * textureHeight];
-	*outRowPitch = (int)rowPitch;
-	return data;
-}
-
-
-void RenderAPI_OpenGLCoreES::EndModifyTexture(void* textureHandle, int textureWidth, int textureHeight, int rowPitch, void* dataPtr)
-{
-	GLuint gltex = (GLuint)(size_t)(textureHandle);
-	// Update texture data, and free the memory buffer
-	glBindTexture(GL_TEXTURE_2D, gltex);
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, textureWidth, textureHeight, GL_RGBA, GL_UNSIGNED_BYTE, dataPtr);
-	delete[](unsigned char*)dataPtr;
-}
-
-void* RenderAPI_OpenGLCoreES::BeginModifyVertexBuffer(void* bufferHandle, size_t* outBufferSize)
-{
-#	if SUPPORT_OPENGL_ES
-	return 0;
-#	else
-	glBindBuffer(GL_ARRAY_BUFFER, (GLuint)(size_t)bufferHandle);
-	GLint size = 0;
-	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-	*outBufferSize = size;
-	void* mapped = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-	return mapped;
-#	endif
-}
-
-
-void RenderAPI_OpenGLCoreES::EndModifyVertexBuffer(void* bufferHandle)
-{
-#	if !SUPPORT_OPENGL_ES
-	glBindBuffer(GL_ARRAY_BUFFER, (GLuint)(size_t)bufferHandle);
-	glUnmapBuffer(GL_ARRAY_BUFFER);
-#	endif
-}
-
 #endif // #if SUPPORT_OPENGL_UNIFIED

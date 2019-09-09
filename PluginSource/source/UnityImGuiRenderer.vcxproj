@@ -92,6 +92,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ImGuiDrawData.h" />
+    <ClInclude Include="ImGuiShader.h" />
     <ClInclude Include="PlatformBase.h" />
     <ClInclude Include="RenderAPI.h" />
     <ClInclude Include="Unity\IUnityGraphics.h" />

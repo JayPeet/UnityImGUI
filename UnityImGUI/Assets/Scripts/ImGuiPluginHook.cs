@@ -6,13 +6,16 @@ using UnityEngine;
 
 public class ImGuiPluginHook : MonoBehaviour
 {
+    [DllImport("UnityImGuiRenderer")]
+    private static extern System.IntPtr GetRenderEventFunc();
+
     private delegate void DebugCallback(string message);
 
     [DllImport("UnityImGuiRenderer")]
     private static extern void RegisterDebugCallback(DebugCallback callback);
 
     [DllImport("UnityImGuiRenderer")]
-    public static extern void ReadImGuiDrawData(ImGuiNET.ImDrawDataPtr ptr);
+    public static extern void SendImGuiDrawCommands(ImGuiNET.ImDrawDataPtr ptr);
 
     private ImGuiController _controller;
 
@@ -24,13 +27,24 @@ public class ImGuiPluginHook : MonoBehaviour
     private void Start()
     {
         RegisterDebugCallback(new DebugCallback(DebugMethod));
+        StartCoroutine("CallPluginAtEndOfFrames");
     }
 
-    private void Update()
+    private IEnumerator CallPluginAtEndOfFrames()
+    {
+        while (true)
+        {
+            //At the end of the frame, have ImGui render before invoking the draw on the GPU.
+            yield return new WaitForEndOfFrame();
+            _controller.Render();
+            GL.IssuePluginEvent(GetRenderEventFunc(), 1);
+        }
+    }
+
+     private void Update()
     {
         _controller.Update();
         SubmitUI();
-        _controller.Render();
     }
 
     private static void DebugMethod(string message)

@@ -102,7 +102,7 @@ public class ImGuiController
             _frameBegun = false;
             ImGui.Render();
             //#TODO : Pass GetDrawData to the C++ dll.
-            ImGuiPluginHook.ReadImGuiDrawData(ImGui.GetDrawData());
+            ImGuiPluginHook.SendImGuiDrawCommands(ImGui.GetDrawData());
         }
     }
 
@@ -137,6 +137,10 @@ public class ImGuiController
         io.MouseWheel = Input.mouseScrollDelta.y;
 
         //#TODO : Implement each Key!
+        foreach (char c in Input.inputString)
+        {
+            io.KeysDown[(int)c] = true;
+        }
 
         io.KeyCtrl = Input.GetKey(KeyCode.LeftControl);
         io.KeyAlt = Input.GetKey(KeyCode.LeftAlt);
