@@ -24,6 +24,12 @@ public class ImGuiController
         _frameBegun = true;
     }
 
+    ~ImGuiController()
+    {
+        ImGui.DestroyContext();
+        Debug.Log("Kill Context");
+    }
+
     public void RecreateFontDeviceTexture(bool sendToGPU)
     {
         ImGuiIOPtr io = ImGui.GetIO();

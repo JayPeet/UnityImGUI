@@ -33,22 +33,23 @@ public class ImGuiPluginHook : MonoBehaviour
         StartCoroutine("CallPluginAtEndOfFrames");
     }
 
+    private WaitForEndOfFrame frameWait = new WaitForEndOfFrame();
     private IEnumerator CallPluginAtEndOfFrames()
     {
 
-        yield return new WaitForEndOfFrame();
+        yield return frameWait;
         _controller.RecreateFontDeviceTexture(true);
 
         while (true)
         {
             //At the end of the frame, have ImGui render before invoking the draw on the GPU.
-            yield return new WaitForEndOfFrame();
+            yield return frameWait;
             _controller.Render();
             GL.IssuePluginEvent(GetRenderEventFunc(), 1);
         }
     }
 
-     private void Update()
+    private void Update()
     {
         _controller.Update();
         SubmitUI();
