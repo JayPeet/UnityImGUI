@@ -1,10 +1,12 @@
 using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ImGuiNET
 {
+    [StructLayout(LayoutKind.Sequential, Pack = 0)]
     public unsafe partial struct ImDrawData
     {
         public byte Valid;
@@ -16,6 +18,7 @@ namespace ImGuiNET
         public Vector2 DisplaySize;
         public Vector2 FramebufferScale;
     }
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct ImDrawDataPtr
     {
         public ImDrawData* NativePtr { get; }

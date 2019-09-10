@@ -1,10 +1,12 @@
 using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ImGuiNET
 {
+    [StructLayout(LayoutKind.Sequential, Pack = 0)]
     public unsafe partial struct ImDrawList
     {
         public ImVector CmdBuffer;
@@ -22,6 +24,7 @@ namespace ImGuiNET
         public ImVector _Path;
         public ImDrawListSplitter _Splitter;
     }
+    [StructLayout(LayoutKind.Sequential, Pack = 0)]
     public unsafe partial struct ImDrawListPtr
     {
         public ImDrawList* NativePtr { get; }

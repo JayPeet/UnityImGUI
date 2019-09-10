@@ -81,7 +81,9 @@ public class ImGuiController
             _frameBegun = false;
             ImGui.Render();
             //#TODO : Pass GetDrawData to the C++ dll.
-            ImGuiPluginHook.SendImGuiDrawCommands(ImGui.GetDrawData());
+            var d = ImGui.GetDrawData();
+            
+            ImGuiPluginHook.SendImGuiDrawCommands(d);
         }
     }
 
