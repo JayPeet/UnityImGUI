@@ -22,9 +22,13 @@ public class ImGuiPluginHook : MonoBehaviour
 
     private ImGuiController _controller;
 
+    public float x, y;
+    private TestWidget widget;
+
     private void Awake()
     {
         _controller = new ImGuiController();
+        widget = new TestWidget();
     }
 
     private void Start()
@@ -53,12 +57,14 @@ public class ImGuiPluginHook : MonoBehaviour
     {
         _controller.Update();
         SubmitUI();
+        //Widgets.DrawGraph();
     }
 
     private static void DebugMethod(string message)
     {
         Debug.Log("UnityImGuiRenderer: " + message);
     }
+
 
     private static void SubmitUI()
     {
