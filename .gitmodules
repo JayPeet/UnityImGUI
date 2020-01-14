@@ -1,6 +1,1 @@
-[submodule "PluginSource/source/vendor/DiligentCore"]
-	path = PluginSource/source/vendor/DiligentCore
-	url = https://github.com/DiligentGraphics/DiligentCore.git
-[submodule "PluginSource/source/Dillignet"]
-	path = PluginSource/source/Dillignet
-	url = https://github.com/DiligentGraphics/DiligentEngine.git
+
