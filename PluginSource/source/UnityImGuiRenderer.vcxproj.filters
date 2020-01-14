@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Diligent">
+      <UniqueIdentifier>{152966D3-01F6-C0DE-2A0F-AF86163BF66C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\DiligentCore">
+      <UniqueIdentifier>{9DCD6A06-093A-2601-D22D-BE5E3E594869}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\DiligentCore\Graphics">
+      <UniqueIdentifier>{7D3650E9-695C-1A50-52A2-9F1B3E673F1C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12">
+      <UniqueIdentifier>{7169FF53-5DFD-F4FB-C6C1-4EB0B2742FEE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders">
+      <UniqueIdentifier>{D71A3417-C306-CC86-2C7D-8BD918886CB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips">
+      <UniqueIdentifier>{EAC4AE5F-56B0-C1C0-5F89-C839CBF3BEFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\DiligentCore\ThirdParty">
+      <UniqueIdentifier>{37CACD16-231B-B958-4C7F-A71A382F4CC2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\DiligentCore\ThirdParty\SPIRV-Cross">
+      <UniqueIdentifier>{D1E2D968-BDF5-D9C1-66DF-B6AE52D1760F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\DiligentCore\ThirdParty\SPIRV-Tools">
+      <UniqueIdentifier>{58DD0B6A-44F0-0BC3-EDD9-E8AFD9CBA810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\Projects">
+      <UniqueIdentifier>{2E5EC095-9A74-BE2B-E3EB-494D4F418FB3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\Projects\Asteroids">
+      <UniqueIdentifier>{8B895C0F-F796-8AF5-807D-86E0EC8956AC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diligent\Projects\Asteroids\CompiledShaders">
+      <UniqueIdentifier>{F12EF212-5D94-8599-E66C-277252D17A08}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Unity">
       <UniqueIdentifier>{BE423F0E-2A57-67BF-F3D8-0A1F5FAC63F0}</UniqueIdentifier>
     </Filter>
@@ -9,6 +45,66 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips\GenerateMipsGammaCS.h">
+      <Filter>Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips\GenerateMipsGammaOddCS.h">
+      <Filter>Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips\GenerateMipsGammaOddXCS.h">
+      <Filter>Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips\GenerateMipsGammaOddYCS.h">
+      <Filter>Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips\GenerateMipsLinearCS.h">
+      <Filter>Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips\GenerateMipsLinearOddCS.h">
+      <Filter>Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips\GenerateMipsLinearOddXCS.h">
+      <Filter>Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips\GenerateMipsLinearOddYCS.h">
+      <Filter>Diligent\DiligentCore\Graphics\GraphicsEngineD3D12\CompiledShaders\GenerateMips</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\DiligentCore\ThirdParty\SPIRV-Cross\gitversion.h">
+      <Filter>Diligent\DiligentCore\ThirdParty\SPIRV-Cross</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\DiligentCore\ThirdParty\SPIRV-Tools\DebugInfo.h">
+      <Filter>Diligent\DiligentCore\ThirdParty\SPIRV-Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\asteroid_ps.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\asteroid_ps_d3d11.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\asteroid_ps_diligent.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\asteroid_vs.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\asteroid_vs_diligent.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\font_ps.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\skybox_ps.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\skybox_vs.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\sprite_ps.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Diligent\Projects\Asteroids\CompiledShaders\sprite_vs.h">
+      <Filter>Diligent\Projects\Asteroids\CompiledShaders</Filter>
+    </ClInclude>
     <ClInclude Include="ImGuiDrawData.h" />
     <ClInclude Include="ImGuiShader.h" />
     <ClInclude Include="PlatformBase.h" />

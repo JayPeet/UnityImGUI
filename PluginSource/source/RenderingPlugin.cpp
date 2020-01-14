@@ -134,7 +134,7 @@ static void DebugInUnity(std::string message)
     }
 }
 
-//#TODO : Acquire the in data here. Actuall drawing has to happen in OnRenderEvent.
+//#TODO : Acquire the in data here. Actual drawing has to happen in OnRenderEvent.
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API SendImGuiDrawCommands(ImDrawData* inData)
 {
     dataToDraw = inData;

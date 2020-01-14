@@ -887,7 +887,5 @@ void RenderAPI_D3D12::ProcessImGuiCommandList(ImDrawData* drawData)
         global_idx_offset += cmd_list->IdxBuffer.Size;
         global_vtx_offset += cmd_list->VtxBuffer.Size;
     }
-
-    s_D3D12->ExecuteCommandList(g_pd3dCommandList, 1, nullptr);
 }
 #endif // #if SUPPORT_D3D12
