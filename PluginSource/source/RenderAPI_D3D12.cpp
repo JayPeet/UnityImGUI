@@ -888,6 +888,6 @@ void RenderAPI_D3D12::ProcessImGuiCommandList(ImDrawData* drawData)
         global_vtx_offset += cmd_list->VtxBuffer.Size;
     }
 
-    s_D3D12->ExecuteCommandList(g_pd3dCommandList, 1, nullptr);
+    s_D3D12->ExecuteCommandList(g_pd3dCommandList, 1, UnityGraphicsD3D12ResourceState???);
 }
 #endif // #if SUPPORT_D3D12
