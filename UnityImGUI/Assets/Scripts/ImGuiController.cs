@@ -123,10 +123,13 @@ public class ImGuiController
         io.MousePos = mousePosition;
         io.MouseWheel = Input.mouseScrollDelta.y;
 
-        //#TODO : Implement each Key!
-        foreach (char c in Input.inputString)
+        // Call to io.AddInputCharacter is required to make text wiget working
+        io.AddInputCharactersUTF8(Input.inputString);
+
+        // Check all keys. We can rely on Input.inputString with this, because we miss arrows and few other keys.
+        for (int key = 0; key < 512; ++key)
         {
-            io.KeysDown[(int)c] = true;
+            io.KeysDown[key] = Input.GetKey((KeyCode)key);
         }
 
         io.KeyCtrl = Input.GetKey(KeyCode.LeftControl);
