@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 0
 --- !u!196 &5
@@ -130,10 +131,10 @@ GameObject:
   m_Component:
   - component: {fileID: 9}
   - component: {fileID: 10}
-  - component: {fileID: 12}
   - component: {fileID: 13}
   - component: {fileID: 11}
   - component: {fileID: 8}
+  - component: {fileID: 12}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -218,14 +219,20 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7}
   m_Enabled: 1
---- !u!92 &12
-Behaviour:
+--- !u!114 &12
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e6bff9eaccd63e478d093b6296a5851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  x: 0
+  y: 0
 --- !u!124 &13
 Behaviour:
   m_ObjectHideFlags: 0
@@ -273,8 +280,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.997495, b: 0.955224, a: 1}
   m_Intensity: 1
   m_Range: 10

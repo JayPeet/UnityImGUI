@@ -22,13 +22,9 @@ public class ImGuiPluginHook : MonoBehaviour
 
     private ImGuiController _controller;
 
-    public float x, y;
-    private TestWidget widget;
-
     private void Awake()
     {
         _controller = new ImGuiController();
-        widget = new TestWidget();
     }
 
     private void Start()
@@ -40,7 +36,6 @@ public class ImGuiPluginHook : MonoBehaviour
     private WaitForEndOfFrame frameWait = new WaitForEndOfFrame();
     private IEnumerator CallPluginAtEndOfFrames()
     {
-
         yield return frameWait;
         _controller.RecreateFontDeviceTexture(true);
 
@@ -56,8 +51,6 @@ public class ImGuiPluginHook : MonoBehaviour
     private void Update()
     {
         _controller.Update();
-        SubmitUI();
-        //Widgets.DrawGraph();
     }
 
     private static void DebugMethod(string message)

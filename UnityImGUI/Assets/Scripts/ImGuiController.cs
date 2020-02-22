@@ -27,7 +27,6 @@ public class ImGuiController
     ~ImGuiController()
     {
         ImGui.DestroyContext();
-        Debug.Log("Kill Context");
     }
 
     public void RecreateFontDeviceTexture(bool sendToGPU)
