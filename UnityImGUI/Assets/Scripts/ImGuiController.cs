@@ -37,7 +37,7 @@ public class ImGuiController
         int width, height, bytesPerPixel;
         io.Fonts.GetTexDataAsRGBA32(out pixels, out width, out height, out bytesPerPixel);
 
-        if(sendToGPU)
+        if (sendToGPU)
         {
             IntPtr fontTexID = ImGuiPluginHook.GenerateImGuiFontTexture(pixels, width, height, bytesPerPixel);
             io.Fonts.SetTexID(fontTexID);
@@ -88,7 +88,7 @@ public class ImGuiController
             ImGui.Render();
             //#TODO : Pass GetDrawData to the C++ dll.
             var d = ImGui.GetDrawData();
-            
+
             ImGuiPluginHook.SendImGuiDrawCommands(d);
         }
     }
@@ -105,7 +105,6 @@ public class ImGuiController
 
         _frameBegun = true;
         ImGui.NewFrame();
-      
     }
 
     private void UpdateImGuiInput()
@@ -120,21 +119,26 @@ public class ImGuiController
         io.MouseDown[0] = leftPressed || Input.GetMouseButtonDown(0);
         io.MouseDown[1] = rightPressed || Input.GetMouseButtonDown(1);
         io.MouseDown[2] = middlePressed || Input.GetMouseButtonDown(2);
+
         io.MousePos = mousePosition;
         io.MouseWheel = Input.mouseScrollDelta.y;
 
         // Call to io.AddInputCharacter is required to make text wiget working
+        
         io.AddInputCharactersUTF8(Input.inputString);
 
         // Check all keys. We can rely on Input.inputString with this, because we miss arrows and few other keys.
-        for (int key = 0; key < 512; ++key)
+        if(Input.anyKey)
         {
-            io.KeysDown[key] = Input.GetKey((KeyCode)key);
-        }
+            for (int key = 0; key < 512; ++key)
+            {
+                io.KeysDown[key] = Input.GetKey((KeyCode)key);
+            }
 
-        io.KeyCtrl = Input.GetKey(KeyCode.LeftControl);
-        io.KeyAlt = Input.GetKey(KeyCode.LeftAlt);
-        io.KeyShift = Input.GetKey(KeyCode.LeftShift);
-        io.KeySuper = Input.GetKey(KeyCode.LeftWindows);
+            io.KeyCtrl = Input.GetKey(KeyCode.LeftControl);
+            io.KeyAlt = Input.GetKey(KeyCode.LeftAlt);
+            io.KeyShift = Input.GetKey(KeyCode.LeftShift);
+            io.KeySuper = Input.GetKey(KeyCode.LeftWindows);
+        }
     }
 }
