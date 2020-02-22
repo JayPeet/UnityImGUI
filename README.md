@@ -20,5 +20,4 @@ ImGUI.NET is compiled within unity using an asmdef, as it uses unsafe c sharp co
  - [ ] Metal renderer.
  - [ ] OpenGL renderer.
  - [ ] OpenGLES renderer.
- - [ ] Upgrade ImGui to 1.74 (currently 1.72b)
  - [ ] Add VR support, by allowing ImGui to be rendered onto a Unity texture, and displayed within 3D space.
