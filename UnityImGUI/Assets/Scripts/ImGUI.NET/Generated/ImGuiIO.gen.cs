@@ -17,7 +17,7 @@ namespace ImGuiNET
         public float MouseDoubleClickTime;
         public float MouseDoubleClickMaxDist;
         public float MouseDragThreshold;
-        public fixed int KeyMap[21];
+        public fixed int KeyMap[22];
         public float KeyRepeatDelay;
         public float KeyRepeatRate;
         public void* UserData;
@@ -31,6 +31,7 @@ namespace ImGuiNET
         public byte ConfigInputTextCursorBlink;
         public byte ConfigWindowsResizeFromEdges;
         public byte ConfigWindowsMoveFromTitleBarOnly;
+        public float ConfigWindowsMemoryCompactTimer;
         public byte* BackendPlatformName;
         public byte* BackendRendererName;
         public void* BackendPlatformUserData;
@@ -51,7 +52,7 @@ namespace ImGuiNET
         public byte KeyAlt;
         public byte KeySuper;
         public fixed byte KeysDown[512];
-        public fixed float NavInputs[22];
+        public fixed float NavInputs[21];
         public byte WantCaptureMouse;
         public byte WantCaptureKeyboard;
         public byte WantTextInput;
@@ -88,8 +89,8 @@ namespace ImGuiNET
         public fixed float MouseDragMaxDistanceSqr[5];
         public fixed float KeysDownDuration[512];
         public fixed float KeysDownDurationPrev[512];
-        public fixed float NavInputsDownDuration[22];
-        public fixed float NavInputsDownDurationPrev[22];
+        public fixed float NavInputsDownDuration[21];
+        public fixed float NavInputsDownDurationPrev[21];
         public ImVector InputQueueCharacters;
     }
     public unsafe partial struct ImGuiIOPtr
@@ -110,7 +111,7 @@ namespace ImGuiNET
         public ref float MouseDoubleClickTime => ref Unsafe.AsRef<float>(&NativePtr->MouseDoubleClickTime);
         public ref float MouseDoubleClickMaxDist => ref Unsafe.AsRef<float>(&NativePtr->MouseDoubleClickMaxDist);
         public ref float MouseDragThreshold => ref Unsafe.AsRef<float>(&NativePtr->MouseDragThreshold);
-        public RangeAccessor<int> KeyMap => new RangeAccessor<int>(NativePtr->KeyMap, 21);
+        public RangeAccessor<int> KeyMap => new RangeAccessor<int>(NativePtr->KeyMap, 22);
         public ref float KeyRepeatDelay => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatDelay);
         public ref float KeyRepeatRate => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatRate);
         public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
@@ -124,6 +125,7 @@ namespace ImGuiNET
         public ref bool ConfigInputTextCursorBlink => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTextCursorBlink);
         public ref bool ConfigWindowsResizeFromEdges => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsResizeFromEdges);
         public ref bool ConfigWindowsMoveFromTitleBarOnly => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsMoveFromTitleBarOnly);
+        public ref float ConfigWindowsMemoryCompactTimer => ref Unsafe.AsRef<float>(&NativePtr->ConfigWindowsMemoryCompactTimer);
         public NullTerminatedString BackendPlatformName => new NullTerminatedString(NativePtr->BackendPlatformName);
         public NullTerminatedString BackendRendererName => new NullTerminatedString(NativePtr->BackendRendererName);
         public IntPtr BackendPlatformUserData { get => (IntPtr)NativePtr->BackendPlatformUserData; set => NativePtr->BackendPlatformUserData = (void*)value; }
@@ -144,7 +146,7 @@ namespace ImGuiNET
         public ref bool KeyAlt => ref Unsafe.AsRef<bool>(&NativePtr->KeyAlt);
         public ref bool KeySuper => ref Unsafe.AsRef<bool>(&NativePtr->KeySuper);
         public RangeAccessor<bool> KeysDown => new RangeAccessor<bool>(NativePtr->KeysDown, 512);
-        public RangeAccessor<float> NavInputs => new RangeAccessor<float>(NativePtr->NavInputs, 22);
+        public RangeAccessor<float> NavInputs => new RangeAccessor<float>(NativePtr->NavInputs, 21);
         public ref bool WantCaptureMouse => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureMouse);
         public ref bool WantCaptureKeyboard => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureKeyboard);
         public ref bool WantTextInput => ref Unsafe.AsRef<bool>(&NativePtr->WantTextInput);
@@ -173,8 +175,8 @@ namespace ImGuiNET
         public RangeAccessor<float> MouseDragMaxDistanceSqr => new RangeAccessor<float>(NativePtr->MouseDragMaxDistanceSqr, 5);
         public RangeAccessor<float> KeysDownDuration => new RangeAccessor<float>(NativePtr->KeysDownDuration, 512);
         public RangeAccessor<float> KeysDownDurationPrev => new RangeAccessor<float>(NativePtr->KeysDownDurationPrev, 512);
-        public RangeAccessor<float> NavInputsDownDuration => new RangeAccessor<float>(NativePtr->NavInputsDownDuration, 22);
-        public RangeAccessor<float> NavInputsDownDurationPrev => new RangeAccessor<float>(NativePtr->NavInputsDownDurationPrev, 22);
+        public RangeAccessor<float> NavInputsDownDuration => new RangeAccessor<float>(NativePtr->NavInputsDownDuration, 21);
+        public RangeAccessor<float> NavInputsDownDurationPrev => new RangeAccessor<float>(NativePtr->NavInputsDownDurationPrev, 21);
         public ImVector<ushort> InputQueueCharacters => new ImVector<ushort>(NativePtr->InputQueueCharacters);
         public void AddInputCharacter(uint c)
         {

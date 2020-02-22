@@ -32,6 +32,7 @@ namespace ImGuiNET
         public float GrabRounding;
         public float TabRounding;
         public float TabBorderSize;
+        public ImGuiDir ColorButtonPosition;
         public Vector2 ButtonTextAlign;
         public Vector2 SelectableTextAlign;
         public Vector2 DisplayWindowPadding;
@@ -40,6 +41,7 @@ namespace ImGuiNET
         public byte AntiAliasedLines;
         public byte AntiAliasedFill;
         public float CurveTessellationTol;
+        public float CircleSegmentMaxError;
         public Vector4 Colors_0;
         public Vector4 Colors_1;
         public Vector4 Colors_2;
@@ -122,6 +124,7 @@ namespace ImGuiNET
         public ref float GrabRounding => ref Unsafe.AsRef<float>(&NativePtr->GrabRounding);
         public ref float TabRounding => ref Unsafe.AsRef<float>(&NativePtr->TabRounding);
         public ref float TabBorderSize => ref Unsafe.AsRef<float>(&NativePtr->TabBorderSize);
+        public ref ImGuiDir ColorButtonPosition => ref Unsafe.AsRef<ImGuiDir>(&NativePtr->ColorButtonPosition);
         public ref Vector2 ButtonTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->ButtonTextAlign);
         public ref Vector2 SelectableTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->SelectableTextAlign);
         public ref Vector2 DisplayWindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayWindowPadding);
@@ -130,6 +133,7 @@ namespace ImGuiNET
         public ref bool AntiAliasedLines => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedLines);
         public ref bool AntiAliasedFill => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedFill);
         public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
+        public ref float CircleSegmentMaxError => ref Unsafe.AsRef<float>(&NativePtr->CircleSegmentMaxError);
         public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 48);
         public void Destroy()
         {
