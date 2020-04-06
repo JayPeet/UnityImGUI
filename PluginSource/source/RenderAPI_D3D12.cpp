@@ -1,6 +1,10 @@
 #include "RenderAPI.h"
 #include "PlatformBase.h"
 
+#include "cimgui.h"
+
+#define IM_ASSERT // TODO: make this work properly
+
 // Direct3D 12 implementation of RenderAPI.
 
 
@@ -864,7 +868,7 @@ void RenderAPI_D3D12::ProcessImGuiCommandList(ImDrawData* drawData)
         const ImDrawList* cmd_list = drawData->CmdLists[n];
         for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
         {
-            const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[cmd_i];
+            const ImDrawCmd* pcmd = &cmd_list->CmdBuffer.Data[cmd_i];
             if (pcmd->UserCallback != NULL)
             {
                 // User callback, registered via ImDrawList::AddCallback()

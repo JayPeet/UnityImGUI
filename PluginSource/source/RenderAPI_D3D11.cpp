@@ -7,9 +7,10 @@
 
 #include <assert.h>
 #include <d3d11.h>
+#include "cimgui.h"
+
 #include "Unity/IUnityGraphicsD3D11.h"
 #include "ImGuiShader.h"
-#include "ImGuiDrawData.h"
 
 
 class RenderAPI_D3D11 : public RenderAPI
@@ -489,7 +490,7 @@ void RenderAPI_D3D11::ProcessImGuiCommandList(ImDrawData* drawData)
         const ImDrawList* cmd_list = drawData->CmdLists[n];
         for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
         {
-            const ImDrawCmd* pcmd = &cmd_list->CmdBuffer[cmd_i];
+            const ImDrawCmd* pcmd = &cmd_list->CmdBuffer.Data[cmd_i];
             if (pcmd->UserCallback)
             {
 				//pcmd->UserCallback(cmd_list, pcmd);

@@ -7,10 +7,28 @@ project "UnityImGuiRenderer"
     cppdialect "C++17"
     staticruntime "on"
 
-    targetdir "../../UnityImGui/Assets/Plugins"
+    filter {"system:windows", "configurations:Release"}
+        targetdir "../win/release"
+    filter {"system:windows", "configurations:Debug"}
+        targetdir "../win/debug"
+    filter{}
+
     objdir "projectfiles/"
     location "."
     files {"**.h", "**.hpp", "**.c","**.cpp"}
+
+    includedirs{ "../../cimgui/source"}
+
+    defines{ "CIMGUI_DEFINE_ENUMS_AND_STRUCTS" }
+
+    links{"cimgui"}
+
+    filter {"system:windows", "configurations:Release"}
+        libdirs{"../../cimgui/win/release"}
+    filter {"system:windows", "configurations:Debug"}
+        libdirs{"../../cimgui/win/debug"}
+    filter {}
+
     filter "system:windows"
         systemversion "latest"
         links {"opengl32"}

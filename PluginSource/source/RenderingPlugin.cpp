@@ -2,7 +2,8 @@
 
 #include "PlatformBase.h"
 #include "RenderAPI.h"
-#include "ImGuiDrawData.h"
+
+#include "cimgui.h"
 
 #include <assert.h>
 #include <math.h>
@@ -18,11 +19,29 @@ static void UNITY_INTERFACE_API OnGraphicsDeviceEvent(UnityGfxDeviceEventType ev
 static IUnityInterfaces* s_UnityInterfaces = NULL;
 static IUnityGraphics* s_Graphics = NULL;
 
+static ImDrawData* s_drawData = NULL;
+
+void CleanupDrawLists(ImDrawData* drawData)
+{
+	// D11.JN: CmdLists are normally managed internally by imgui, but we're cloning them so we need to take responsibility for cleanup
+	if (drawData->CmdLists)
+	{
+		for (int i = 0; i < drawData->CmdListsCount; ++i)
+		{
+			delete drawData->CmdLists[i];
+		}
+		delete[] drawData->CmdLists;
+	}
+}
+
+
 extern "C" void	UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API UnityPluginLoad(IUnityInterfaces* unityInterfaces)
 {
 	s_UnityInterfaces = unityInterfaces;
 	s_Graphics = s_UnityInterfaces->Get<IUnityGraphics>();
 	s_Graphics->RegisterDeviceEventCallback(OnGraphicsDeviceEvent);
+
+	s_drawData = new ImDrawData();
 	
 #if SUPPORT_VULKAN
 	if (s_Graphics->GetRenderer() == kUnityGfxRendererNull)
@@ -38,6 +57,9 @@ extern "C" void	UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API UnityPluginLoad(IUnit
 
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API UnityPluginUnload()
 {
+	CleanupDrawLists(s_drawData);
+	ImDrawData_destroy(s_drawData);
+
 	s_Graphics->UnregisterDeviceEventCallback(OnGraphicsDeviceEvent);
 }
 
@@ -93,15 +115,16 @@ static void UNITY_INTERFACE_API OnGraphicsDeviceEvent(UnityGfxDeviceEventType ev
 // This will be called for GL.IssuePluginEvent script calls; eventID will
 // be the integer passed to IssuePluginEvent. In this example, we just ignore
 // that value.
-static ImDrawData* dataToDraw;
 static void UNITY_INTERFACE_API OnRenderEvent(int eventID)
 {
 	// Unknown / unsupported graphics device type? Do nothing
 	if (s_CurrentAPI == NULL)
 		return;
 
-    //#TODO : Do the actual IMGUI render here.
-    s_CurrentAPI->ProcessImGuiCommandList(dataToDraw);
+	if (s_drawData)
+	{
+		s_CurrentAPI->ProcessImGuiCommandList(s_drawData);
+	}
 }
 
 
@@ -134,10 +157,28 @@ static void DebugInUnity(std::string message)
     }
 }
 
-//#TODO : Acquire the in data here. Actual drawing has to happen in OnRenderEvent.
 extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API SendImGuiDrawCommands(ImDrawData* inData)
 {
-    dataToDraw = inData;
+	CleanupDrawLists(s_drawData);
+	ImDrawData_Clear(s_drawData);
+
+	if (inData)
+	{
+		s_drawData->Valid = inData->Valid;
+		s_drawData->CmdListsCount = inData->CmdListsCount;
+		s_drawData->TotalIdxCount = inData->TotalIdxCount;
+		s_drawData->TotalVtxCount = inData->TotalVtxCount;
+		s_drawData->DisplayPos = inData->DisplayPos;
+		s_drawData->DisplaySize = inData->DisplaySize;
+		s_drawData->FramebufferScale = inData->FramebufferScale;
+
+		s_drawData->CmdLists = inData->CmdListsCount ? new ImDrawList*[inData->CmdListsCount] : NULL;
+	
+		for (int i = 0; i < inData->CmdListsCount; ++i)
+		{
+			s_drawData->CmdLists[i] = ImDrawList_CloneOutput(inData->CmdLists[i]);
+		}
+	}
 }
 
 extern "C" ImTextureID UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API GenerateImGuiFontTexture(void* pixels, int width, int height, int bytesPerPixel)
