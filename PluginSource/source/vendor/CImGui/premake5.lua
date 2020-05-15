@@ -17,7 +17,6 @@ function BoilerPlate()
 
     filter "system:windows"
         systemversion "latest"
-        platformStr = "win"
     filter {"system:windows", "kind:SharedLib"}
         defines{"IMGUI_IMPL_API=extern \"C\" __declspec(dllexport)"}
     filter "system:not windows"
@@ -32,7 +31,6 @@ function BoilerPlate()
         targetdir(MakePath("win/release"))
     filter{}
 
-    targetDirectory = MakePath(platformStr .. "/" .. configStr)
     
 
     includedirs {MakePath(""), MakePath("imgui")}
