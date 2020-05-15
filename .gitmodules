@@ -1,1 +1,4 @@
 
+[submodule "PluginSource/cimgui"]
+	path = PluginSource/cimgui
+	url = https://github.com/cimgui/cimgui
