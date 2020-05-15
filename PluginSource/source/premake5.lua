@@ -17,7 +17,7 @@ project "UnityImGuiRenderer"
     location "."
     files {"**.h", "**.hpp", "**.c","**.cpp"}
 
-    includedirs{ "../../cimgui/source"}
+    includedirs{ "../cimgui"}
 
     defines{ "CIMGUI_DEFINE_ENUMS_AND_STRUCTS" }
 

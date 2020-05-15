@@ -10,6 +10,11 @@
 #include <vector>
 #include <string>
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
+
 
 // --------------------------------------------------------------------------
 // UnitySetInterfaces
@@ -37,6 +42,7 @@ void CleanupDrawLists(ImDrawData* drawData)
 
 extern "C" void	UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API UnityPluginLoad(IUnityInterfaces* unityInterfaces)
 {
+    _CrtDumpMemoryLeaks();
 	s_UnityInterfaces = unityInterfaces;
 	s_Graphics = s_UnityInterfaces->Get<IUnityGraphics>();
 	s_Graphics->RegisterDeviceEventCallback(OnGraphicsDeviceEvent);
@@ -61,6 +67,7 @@ extern "C" void UNITY_INTERFACE_EXPORT UNITY_INTERFACE_API UnityPluginUnload()
 	ImDrawData_destroy(s_drawData);
 
 	s_Graphics->UnregisterDeviceEventCallback(OnGraphicsDeviceEvent);
+    _CrtDumpMemoryLeaks();
 }
 
 #if UNITY_WEBGL
