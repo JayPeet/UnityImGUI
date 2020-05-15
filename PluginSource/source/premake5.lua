@@ -1,6 +1,9 @@
 workspace "UnityImGui"
     configurations {"Debug", "Release"}
     architecture "x64"
+group "Dependencies"
+    include "vendor/CImGui"
+group ""
 project "UnityImGuiRenderer"
     kind "SharedLib"
     language "C++"
@@ -24,11 +27,12 @@ project "UnityImGuiRenderer"
     links{"cimgui"}
 
     filter {"system:windows", "configurations:Release"}
-        libdirs{"../../cimgui/win/release"}
+        libdirs{"../cimgui/win/release"}
     filter {"system:windows", "configurations:Debug"}
-        libdirs{"../../cimgui/win/debug"}
+        libdirs{"../cimgui/win/debug"}
     filter {}
 
+    links {"CImGuiShared"}
     filter "system:windows"
         systemversion "latest"
         links {"opengl32"}
